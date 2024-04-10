@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
+    <title>Home</title>
+</head>
+<body>
+    <h1>Welcome to the Members Only Clubhouse!</h1>
+
+    <% if (isAuthenticated) { %>
+        <p>Welcome, <%= user.fullName %>!</p>
+        <a href="/logout">Logout</a>
+    <% } else { %>
+        <a href="/login">Login</a>
+        <a href="/signup">Sign Up</a>
+    <% } %>
+
+    <h2>All Messages</h2>
+    <% messages.forEach(message => { %>
+        <div>
+            <h3><%= message.title %></h3>
+            <p><%= message.text %></p>
+            <p>Posted <%= message.timestamp %></p>
+            <% if (isAuthenticated) { %>
+                <p>By <%= message.author.fullName %></p>
+                <% if (user.isAdmin) { %>
+                    <form action="/messages/delete/<%= message._id %>" method="POST">
+                        <button type="submit">Delete</button>
+                    </form>
+                <% } %>
+            <% } %>
+        </div>
+    <% }) %>
+
+    <% if (isAuthenticated) { %>
+        <h2>Create New Message</h2>
+        <!-- home.ejs -->
+    <% if (success_msg.length > 0) { %>
+       <div class="alert alert-success">
+        <%= success_msg %>
+       </div>
+    <% } %>
+    <% if (error.length > 0) { %>
+      <div class="alert alert-danger">
+        <%= error %>
+        </div>
+    <% } %>
+        <form action="/messages/new" method="POST">
+            <div>
+                <label for="title">Title</label>
+                <input type="text" id="title" name="title" required>
+            </div>
+            <div>
+                <label for="text">Message</label>
+                <textarea id="text" name="text" rows="4" required></textarea>
+            </div>
+            <button type="submit">Submit</button>
+        </form>
+    <% } %>
+</body>
+</html>
