@@ -6,7 +6,7 @@ const User = require('../models/User');
 
 // Route for rendering the signup form
 router.get('/signup', (req, res) => {
-    res.render('signup'); // Assuming you have a signup.ejs file in your views folder
+    res.render('signup'); 
 });
 
 // Route for handling the signup form submission
@@ -41,7 +41,7 @@ router.post('/signup', async (req, res) => {
 
 // Route for rendering the login form
 router.get('/login', (req, res) => {
-    res.render('login', { message: req.flash('error') }); // Assuming you have a login.ejs file in your views folder
+    res.render('login', { message: req.flash('error') }); 
 });
 
 // Route for handling the login form submission
